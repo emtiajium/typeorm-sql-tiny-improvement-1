@@ -1,5 +1,9 @@
 [![CI](https://github.com/emtiajium/typeorm-sql-tiny-improvement-1/actions/workflows/ci.yml/badge.svg)](https://github.com/emtiajium/typeorm-sql-tiny-improvement-1/actions/workflows/ci.yml)
 
+# What is this repository for?
+
+https://dev.to/emtiajium/my-mindset-shifted-from-nosql-to-sql-as-i-embraced-the-power-of-postgresql-for-validation-344d-temp-slug-1552279
+
 # How to Run
 
 ###### Prerequisites

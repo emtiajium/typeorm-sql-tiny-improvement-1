@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { UserRepository } from '@/app/repositories/UserRepository';
 import { UserSaveRequest } from '@/app/domains/DTOs/UserSaveRequest';
 import { User } from '@/app/domains/entities/User';
@@ -26,7 +26,7 @@ export class UserService {
     private async validateRole(roleId: string): Promise<void> {
         const isRoleExist = await this.roleRepository.exist({ where: { id: roleId } });
         if (!isRoleExist) {
-            throw new NotFoundException(`Invalid role ID`);
+            throw new UnprocessableEntityException(`Invalid role ID`);
         }
     }
 
@@ -56,7 +56,7 @@ export class UserService {
     private handleRepositoryException(repositoryException: RepositoryException): void {
         const errorMap: Record<string, Error> = {
             UQ_User_email: new ConflictException(`Email is associated with another user`),
-            FK_User_roleId_Role_id: new NotFoundException(`Invalid role ID`),
+            FK_User_roleId_Role_id: new UnprocessableEntityException(`Invalid role ID`),
         };
         throw errorMap[repositoryException.constraint];
     }

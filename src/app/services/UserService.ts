@@ -47,11 +47,10 @@ export class UserService {
     }
 
     private handleRepositoryException(repositoryException: RepositoryException): void {
-        if (repositoryException.constraint === `UQ_User_email`) {
-            throw new ConflictException(`Email is associated with another user`);
-        }
-        if (/Key \(roleId\)=\([\w-]{36}\) is not present in table "Role"./u.test(repositoryException.detail)) {
-            throw new NotFoundException(`Invalid role ID`);
-        }
+        const errorMap: Record<string, Error> = {
+            UQ_User_email: new ConflictException(`Email is associated with another user`),
+            FK_User_roleId_Role_id: new NotFoundException(`Invalid role ID`),
+        };
+        throw errorMap[repositoryException.constraint];
     }
 }

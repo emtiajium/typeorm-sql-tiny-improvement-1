@@ -27,9 +27,7 @@ describe('UserService', () => {
             };
 
             // Act & Assert
-            await expect(app.get(UserService).saveUserV1(userSaveRequest)).rejects.toThrowError(
-                `Invalid role "${userSaveRequest.roleId}"`,
-            );
+            await expect(app.get(UserService).saveUserV1(userSaveRequest)).rejects.toThrowError(`Invalid role ID`);
         });
 
         it('SHOULD throw an error WHEN email is taken', async () => {
@@ -48,7 +46,7 @@ describe('UserService', () => {
 
             // Act & Assert
             await expect(app.get(UserService).saveUserV1(userSaveRequest)).rejects.toThrowError(
-                `Email "${userSaveRequest.email}" is associated with another user`,
+                `Email is associated with another user`,
             );
         });
 
@@ -64,6 +62,56 @@ describe('UserService', () => {
 
             // Act
             const user = await app.get(UserService).saveUserV1(userSaveRequest);
+
+            // Assert
+            expect(user.id).toBeDefined();
+        });
+    });
+
+    describe('saveUserV2()', () => {
+        it('SHOULD throw an error WHEN roleId is invalid', async () => {
+            // Arrange
+            const userSaveRequest: UserSaveRequest = {
+                email: `random+${uuid.v4()}@firecrackervocabulary.com`,
+                roleId: uuid.v4(),
+            };
+
+            // Act & Assert
+            await expect(app.get(UserService).saveUserV2(userSaveRequest)).rejects.toThrowError(`Invalid role ID`);
+        });
+
+        it('SHOULD throw an error WHEN email is taken', async () => {
+            // Arrange
+            const userSaveRequest: UserSaveRequest = {
+                email: `random+${uuid.v4()}@firecrackervocabulary.com`,
+                roleId: uuid.v4(),
+            };
+            await app.get(RoleRepository).insert({
+                id: userSaveRequest.roleId,
+            });
+            await app.get(UserRepository).insert({
+                email: userSaveRequest.email,
+                role: { id: userSaveRequest.roleId },
+            });
+
+            // Act & Assert
+            await expect(app.get(UserService).saveUserV2(userSaveRequest)).rejects.toThrowError(
+                `Email is associated with another user`,
+            );
+        });
+
+        it('SHOULD return the user WHEN the payload is valid', async () => {
+            // Arrange
+            const userSaveRequest: UserSaveRequest = {
+                email: `random+${uuid.v4()}@firecrackervocabulary.com`,
+                roleId: uuid.v4(),
+            };
+            await app.get(RoleRepository).insert({
+                id: userSaveRequest.roleId,
+            });
+
+            // Act
+            const user = await app.get(UserService).saveUserV2(userSaveRequest);
 
             // Assert
             expect(user.id).toBeDefined();

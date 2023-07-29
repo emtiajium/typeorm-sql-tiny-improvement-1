@@ -1,10 +1,12 @@
-import { BaseEntity } from '@/common/persistence/BaseEntity';
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { RoleType } from '@/app/domains/enums/RoleType';
 import { User } from '@/app/domains/entities/User';
 
 @Entity('Role')
-export class Role extends BaseEntity {
+export class Role {
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
+
     @Column({ type: 'varchar', nullable: false, default: RoleType.CUSTOMER })
     type: string;
 

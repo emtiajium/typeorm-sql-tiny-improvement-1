@@ -1,9 +1,11 @@
-import { BaseEntity } from '@/common/persistence/BaseEntity';
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Role } from '@/app/domains/entities/Role';
 
 @Entity('User')
-export class User extends BaseEntity {
+export class User {
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
+
     @Column({ type: 'varchar', nullable: false, unique: true })
     email: string;
 

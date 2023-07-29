@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import { NestFactory, Reflector } from '@nestjs/core';
-import { ClassSerializerInterceptor, INestApplication, ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { AppModule } from '@/app/AppModule';
 import { ServiceConfig } from '@/common/configs/ServiceConfig';
 
@@ -17,7 +17,6 @@ export class Bootstrap {
         app.useGlobalPipes(new ValidationPipe());
         const { serviceApiPrefix, port } = this.serviceConfig;
         app.setGlobalPrefix(serviceApiPrefix);
-        app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
         await app.listen(port);
         return app;
     }

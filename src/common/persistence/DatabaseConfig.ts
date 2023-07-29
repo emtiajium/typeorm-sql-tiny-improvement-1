@@ -1,7 +1,8 @@
 import { ConfigService } from '@nestjs/config';
+import { DatabaseType } from 'typeorm';
 
 export class DatabaseConfig {
-    type: string;
+    type: DatabaseType;
 
     host: string;
 
@@ -18,7 +19,7 @@ export class DatabaseConfig {
     constructor() {
         const configService = new ConfigService();
 
-        this.type = configService.get<string>('TYPEORM_CONNECTION');
+        this.type = configService.get<DatabaseType>('TYPEORM_CONNECTION');
         this.host = configService.get<string>('TYPEORM_HOST');
         this.port = configService.get<number>('TYPEORM_PORT');
         this.username = configService.get<string>('TYPEORM_USERNAME');

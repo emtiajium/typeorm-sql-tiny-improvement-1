@@ -1,4 +1,4 @@
-import { DatabaseType, DataSource, DataSourceOptions } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 import { config } from 'dotenv';
 import { DatabaseConfig } from '@/common/persistence/DatabaseConfig';
 import { DatabaseNamingStrategy } from '@/common/persistence/DatabaseNamingStrategy';
@@ -6,14 +6,14 @@ import { ConfigService } from '@nestjs/config';
 
 config();
 
-const persistence = new DatabaseConfig();
-
 function getEnvironmentVariableValue(key: string): string {
     return new ConfigService().get(key);
 }
 
+const persistence = new DatabaseConfig();
+
 export default new DataSource({
-    type: persistence.type as DatabaseType,
+    type: persistence.type,
     host: persistence.host,
     port: persistence.port,
     username: persistence.username,

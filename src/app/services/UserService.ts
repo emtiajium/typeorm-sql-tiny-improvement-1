@@ -10,15 +10,8 @@ export class UserService {
     constructor(private readonly userRepository: UserRepository, private readonly roleRepository: RoleRepository) {}
 
     async saveUserV1(userSaveRequest: UserSaveRequest): Promise<User> {
-        const isRoleExist = await this.roleRepository.exist({ where: { id: userSaveRequest.roleId } });
-        if (!isRoleExist) {
-            throw new NotFoundException(`Invalid role ID`);
-        }
-
-        const isUserWithEmailExist = await this.userRepository.exist({ where: { email: userSaveRequest.email } });
-        if (isUserWithEmailExist) {
-            throw new ConflictException(`Email is associated with another user`);
-        }
+        await this.validateRole(userSaveRequest.roleId);
+        await this.validateEmail(userSaveRequest.email);
 
         return this.userRepository.save(
             this.userRepository.create({
@@ -28,6 +21,20 @@ export class UserService {
                 },
             }),
         );
+    }
+
+    private async validateRole(roleId: string): Promise<void> {
+        const isRoleExist = await this.roleRepository.exist({ where: { id: roleId } });
+        if (!isRoleExist) {
+            throw new NotFoundException(`Invalid role ID`);
+        }
+    }
+
+    private async validateEmail(email: string): Promise<void> {
+        const isUserWithEmailExist = await this.userRepository.exist({ where: { email: email } });
+        if (isUserWithEmailExist) {
+            throw new ConflictException(`Email is associated with another user`);
+        }
     }
 
     async saveUserV2(userSaveRequest: UserSaveRequest): Promise<User> {

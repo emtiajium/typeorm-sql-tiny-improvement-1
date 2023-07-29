@@ -41,8 +41,8 @@ jobs:
       - name: Create environment variables
         run: npm run create:env
 
-      - name: Database Tables' modification
-        run: npm run migration:run
+#      - name: Database Tables' modification
+#        run: npm run migration:run
 
       - name: Automated Test
         run: npm run test

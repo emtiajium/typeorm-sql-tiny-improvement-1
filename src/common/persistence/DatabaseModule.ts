@@ -4,6 +4,8 @@ import { DatabaseConfig } from '@/common/persistence/DatabaseConfig';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DatabaseNamingStrategy } from '@/common/persistence/DatabaseNamingStrategy';
 import { LoggerOptions, DatabaseType } from 'typeorm';
+import { User } from '@/app/domains/entities/User';
+import { Role } from '@/app/domains/entities/Role';
 
 @Module({
     imports: [
@@ -20,7 +22,7 @@ import { LoggerOptions, DatabaseType } from 'typeorm';
                     username: databaseConfig.username,
                     password: databaseConfig.password,
                     database: databaseConfig.database,
-                    entities: [],
+                    entities: [User, Role],
                     synchronize: false,
                     logging: databaseConfig.logging as LoggerOptions,
                     namingStrategy: new DatabaseNamingStrategy(),

@@ -28,6 +28,10 @@
 
 ➜ `npm run migration:run`
 
+## Generate new migration script after changing the entity class(es)
+
+➜ `npm run migration:generate migrations/<file-name>`
+
 ###### Run the tests
 
 ➜ `npm run test`

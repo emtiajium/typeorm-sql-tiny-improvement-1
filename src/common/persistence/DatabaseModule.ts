@@ -3,7 +3,6 @@ import { Module } from '@nestjs/common';
 import { DatabaseConfig } from '@/common/persistence/DatabaseConfig';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DatabaseNamingStrategy } from '@/common/persistence/DatabaseNamingStrategy';
-import { LoggerOptions } from 'typeorm';
 import { User } from '@/app/domains/entities/User';
 import { Role } from '@/app/domains/entities/Role';
 
@@ -24,7 +23,7 @@ import { Role } from '@/app/domains/entities/Role';
                     database: databaseConfig.database,
                     entities: [User, Role],
                     synchronize: false,
-                    logging: databaseConfig.logging as LoggerOptions,
+                    logging: databaseConfig.logging,
                     namingStrategy: new DatabaseNamingStrategy(),
                     retryAttempts: 1,
                     autoLoadEntities: false,

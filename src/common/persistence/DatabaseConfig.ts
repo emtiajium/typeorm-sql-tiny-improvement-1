@@ -1,5 +1,5 @@
 import { ConfigService } from '@nestjs/config';
-import { DatabaseType } from 'typeorm';
+import { DatabaseType, LoggerOptions } from 'typeorm';
 
 export class DatabaseConfig {
     type: DatabaseType;
@@ -14,7 +14,7 @@ export class DatabaseConfig {
 
     database: string;
 
-    logging: string[];
+    logging: LoggerOptions;
 
     constructor() {
         const configService = new ConfigService();
@@ -25,6 +25,6 @@ export class DatabaseConfig {
         this.username = configService.get<string>('TYPEORM_USERNAME');
         this.password = configService.get<string>('TYPEORM_PASSWORD');
         this.database = configService.get<string>('TYPEORM_DATABASE');
-        this.logging = configService.get<string>('TYPEORM_LOGGING').split(',');
+        this.logging = configService.get<string>('TYPEORM_LOGGING').split(',') as LoggerOptions;
     }
 }

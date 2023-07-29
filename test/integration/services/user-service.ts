@@ -15,6 +15,8 @@ describe('UserService', () => {
     });
 
     afterAll(async () => {
+        await app.get(UserRepository).delete({});
+        await app.get(RoleRepository).delete({});
         await app.close();
     });
 

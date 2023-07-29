@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+    typeorm-sql-tiny-improvement-1-database:
+        image: postgres:11
+        container_name: typeorm-sql-tiny-improvement-1-postgres
+        restart: always
+        ports:
+            - '5440:5432'
+        deploy:
+            resources:
+                limits:
+                    memory: 256M
+                reservations:
+                    memory: 256M
+        environment:
+            POSTGRES_PASSWORD: 123
+            POSTGRES_USER: postgres
+            POSTGRES_DB: typeorm-sql-tiny-improvement-1
+        volumes:
+            - 'typeorm-sql-tiny-improvement-1-postgres-data:/var/lib/postgresql/data'
+
+volumes:
+    typeorm-sql-tiny-improvement-1-postgres-data:
+        driver: local

@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Role } from '@/app/domains/entities/Role';
 
 @Entity('User')
@@ -10,5 +10,6 @@ export class User {
     email: string;
 
     @ManyToOne(() => Role, (role) => role.users, { eager: false, nullable: false })
+    @JoinColumn({ name: 'roleId' })
     role: Role;
 }

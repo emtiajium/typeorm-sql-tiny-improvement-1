@@ -63,10 +63,10 @@ describe('UserService', () => {
             });
 
             // Act
-            const user = await app.get(UserService).saveUserV1(userSaveRequest);
+            const userId = await app.get(UserService).saveUserV1(userSaveRequest);
 
             // Assert
-            expect(user.id).toBeDefined();
+            expect(userId).toBeDefined();
         });
     });
 
@@ -113,10 +113,10 @@ describe('UserService', () => {
             });
 
             // Act
-            const user = await app.get(UserService).saveUserV2(userSaveRequest);
+            const userId = await app.get(UserService).saveUserV2(userSaveRequest);
 
             // Assert
-            expect(user.id).toBeDefined();
+            expect(userId).toBeDefined();
         });
     });
 });

@@ -9,18 +9,18 @@ import { RepositoryException } from '@/app/domains/types/RepositoryException';
 export class UserService {
     constructor(private readonly userRepository: UserRepository, private readonly roleRepository: RoleRepository) {}
 
-    async saveUserV1(userSaveRequest: UserSaveRequest): Promise<User> {
+    async saveUserV1(userSaveRequest: UserSaveRequest): Promise<string> {
         await this.validateRole(userSaveRequest.roleId);
         await this.validateEmail(userSaveRequest.email);
 
-        return this.userRepository.save(
-            this.userRepository.create({
-                email: userSaveRequest.email,
-                role: {
-                    id: userSaveRequest.roleId,
-                },
-            }),
-        );
+        const insertResult = await this.userRepository.insert({
+            email: userSaveRequest.email,
+            role: {
+                id: userSaveRequest.roleId,
+            },
+        });
+
+        return insertResult.generatedMaps[0].id;
     }
 
     private async validateRole(roleId: string): Promise<void> {
@@ -37,16 +37,15 @@ export class UserService {
         }
     }
 
-    async saveUserV2(userSaveRequest: UserSaveRequest): Promise<User> {
+    async saveUserV2(userSaveRequest: UserSaveRequest): Promise<string> {
         try {
-            return await this.userRepository.save(
-                this.userRepository.create({
-                    email: userSaveRequest.email,
-                    role: {
-                        id: userSaveRequest.roleId,
-                    },
-                }),
-            );
+            const insertResult = await this.userRepository.insert({
+                email: userSaveRequest.email,
+                role: {
+                    id: userSaveRequest.roleId,
+                },
+            });
+            return insertResult.generatedMaps[0].id;
         } catch (error) {
             this.handleRepositoryException(error);
             throw error;

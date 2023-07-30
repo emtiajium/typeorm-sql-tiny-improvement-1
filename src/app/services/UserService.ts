@@ -1,7 +1,6 @@
 import { ConflictException, Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { UserRepository } from '@/app/repositories/UserRepository';
 import { UserSaveRequest } from '@/app/domains/DTOs/UserSaveRequest';
-import { User } from '@/app/domains/entities/User';
 import { RoleRepository } from '@/app/repositories/RoleRepository';
 import { RepositoryException } from '@/app/domains/types/RepositoryException';
 

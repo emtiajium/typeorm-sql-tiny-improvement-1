@@ -2,7 +2,7 @@
 
 # What is this repository for?
 
-https://dev.to/emtiajium/my-mindset-shifted-from-nosql-to-sql-as-i-embraced-the-power-of-postgresql-for-validation-344d-temp-slug-1552279
+[Leverage the power of PostgreSQL for validating data](https://dev.to/emtiajium/leverage-the-power-of-postgresql-for-validating-data-310j)
 
 # How to Run
 

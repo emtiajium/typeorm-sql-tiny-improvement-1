@@ -21,4 +21,5 @@ services:
 
 volumes:
     typeorm-sql-tiny-improvement-1-postgres-data:
+        name: typeorm-sql-tiny-improvement-1-postgres-data
         driver: local
